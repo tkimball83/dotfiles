@@ -11,7 +11,11 @@ export EDITOR=vi
 
 # Prepend brew manpath
 BREW_MANPATH=/usr/local/share/man
-[ -d ${BREW_MANPATH} ] && export MANPATH="${BREW_MANPATH}:${MANPATH}"
+if [ -d ${BREW_MANPATH} ]
+then
+  [ ! -z ${MANPATH} ] && export MANPATH="${BREW_MANPATH}:${MANPATH}"
+  [ -z ${MAHPATH} ] && export MANPATH="${BREW_MANPATH}"
+fi
 
 # Prepend coreutils path
 COREUTILS_PATH=/usr/local/opt/coreutils/libexec/gnubin
