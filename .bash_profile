@@ -1,6 +1,4 @@
-#
 # .bash_profile
-#
 
 # Use colors
 export CLICOLOR=1
