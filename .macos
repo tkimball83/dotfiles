@@ -100,6 +100,12 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 # Safari & WebKit                                                             #
 ###############################################################################
 
+# Disable AutoFill
+defaults write com.apple.Safari AutoFillCreditCardData -bool false
+defaults write com.apple.Safari AutoFillFromAddressBook -bool false
+defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
+defaults write com.apple.Safari AutoFillPasswords -bool false
+
 # Prevent Safari from opening ‘safe’ files automatically after downloading
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
