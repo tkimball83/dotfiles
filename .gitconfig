@@ -1,3 +1,5 @@
+# .gitconfig
+
 [color]
 	branch = auto
 	diff = auto
