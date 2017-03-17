@@ -19,6 +19,9 @@ fi
 COREUTILS_PATH=/usr/local/opt/coreutils/libexec/gnubin
 [ -d ${COREUTILS_PATH} ] && export PATH="${COREUTILS_PATH}:${PATH}"
 
+# Export ansible vault password file
+[ -f ${HOME}/.ansible_vault ] && export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
+
 # Source aliases files
 [ -f ${HOME}/.bash_aliases ] && . ${HOME}/.bash_aliases
 
