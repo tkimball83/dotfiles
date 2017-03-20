@@ -7,7 +7,6 @@
 	status = auto
 	ui = auto
 [core]
-	autocrlf = true
 	editor = vi
 	excludesfile = ~/.gitignore
 [credential]
