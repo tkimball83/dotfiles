@@ -7,7 +7,10 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 # Set default editor
 export EDITOR=vi
 
-# Prepend brew manpath
+# Export path to ansible vault password
+[ -f ${HOME}/.ansible_vault ] && export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
+
+# Export manpath including brew man-pages
 BREW_MANPATH=/usr/local/share/man
 if [ -d ${BREW_MANPATH} ]
 then
@@ -15,15 +18,15 @@ then
   [ -z ${MAHPATH} ] && export MANPATH="${BREW_MANPATH}"
 fi
 
-# Prepend coreutils path
+# Export path including brew coreutils
 COREUTILS_PATH=/usr/local/opt/coreutils/libexec/gnubin
 [ -d ${COREUTILS_PATH} ] && export PATH="${COREUTILS_PATH}:${PATH}"
 
-# Export ansible vault password file
-[ -f ${HOME}/.ansible_vault ] && export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
-
-# Source aliases files
+# Source bash aliases
 [ -f ${HOME}/.bash_aliases ] && . ${HOME}/.bash_aliases
+
+# Source bash proxy
+[ -f ${HOME}/.bash_proxy ] && . ${HOME}/.bash_proxy
 
 # Source liquidprompt
 if [ -f /usr/local/share/liquidprompt ]
@@ -41,6 +44,7 @@ then
   done
 fi
 
+# Add keys to ssh-agent
 function auth()
 {
   ssh_add=/usr/bin/ssh-add
