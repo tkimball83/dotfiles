@@ -1,0 +1,19 @@
+# .bash_exports
+
+# Use colors
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# Set default editor
+export EDITOR=vi
+
+# Export ansible vault password path
+[ -f ${HOME}/.ansible_vault ] && export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
+
+# Export manpath including brew man-pages
+BREW_MANPATH=/usr/local/share/man
+[ -d ${BREW_MANPATH} ] && export MANPATH="${BREW_MANPATH}:${MANPATH}"
+
+# Export path including brew coreutils
+COREUTILS_PATH=/usr/local/opt/coreutils/libexec/gnubin
+[ -d ${COREUTILS_PATH} ] && export PATH="${COREUTILS_PATH}:${PATH}"
