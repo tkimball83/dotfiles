@@ -6,6 +6,9 @@ filetype plugin on
 set autoread 
 set cursorline 
 set expandtab 
+set nobackup
+set noswapfile
+set nowritebackup
 set number 
 set ruler 
 set scrolloff=5 
@@ -16,4 +19,5 @@ set showmode
 set smarttab 
 set tabstop=2 
 set visualbell 
+set viminfo=
 syntax on 
