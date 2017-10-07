@@ -1,5 +1,19 @@
 # .bash_functions
 
+function auth()
+{
+  ssh_add=/usr/bin/ssh-add
+  [ ! -x ${ssh_add} ] && return 1
+  if [ -d "${HOME}/.ssh" ]
+  then
+    for key in ${HOME}/.ssh/id_rsa.*
+    do
+      [[ ! ${key##*/} =~ \.pub$ ]] && ${ssh_add} ${key}
+    done
+  fi
+  return 0
+}
+
 function crypt()
 {
   string=$1
@@ -17,18 +31,4 @@ function crypt()
       return 0
     fi
   done
-}
-
-function auth()
-{
-  ssh_add=/usr/bin/ssh-add
-  [ ! -x ${ssh_add} ] && return 1
-  if [ -d "${HOME}/.ssh" ]
-  then
-    for key in ${HOME}/.ssh/id_rsa.*
-    do
-      [[ ! ${key##*/} =~ \.pub$ ]] && ${ssh_add} ${key}
-    done
-  fi
-  return 0
 }
