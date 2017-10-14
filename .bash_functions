@@ -3,12 +3,18 @@
 function auth()
 {
   ssh_add=/usr/bin/ssh-add
+  ssh_keygen=/usr/bin/ssh-keygen
   [ ! -x ${ssh_add} ] && return 1
+  [ ! -x ${ssh_keygen} ] && return 1
   if [ -d "${HOME}/.ssh" ]
   then
     for key in ${HOME}/.ssh/id_rsa.*
     do
-      [[ ! ${key##*/} =~ \.pub$ ]] && ${ssh_add} ${key}
+      if [[ ! ${key##*/} =~ \.pub$ ]]
+      then
+        ${ssh_add} ${key}
+        [ ! -e ${key}.pub ] && ${ssh_keygen} -y -f ${key} > ${key}.pub
+      fi
     done
   fi
   return 0
