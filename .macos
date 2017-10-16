@@ -155,6 +155,19 @@ defaults write com.apple.Safari UniversalSearchEnabled -bool false
 # Add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
+# Remove history items after one day
+defaults write com.apple.Safari HistoryAgeInDaysLimit -int 1
+
+# Remove download list items upon successful download
+defaults write com.apple.Safari DownloadsClearingPolicy -int 2
+
+# New tabs/windows open with empty page
+defaults write com.apple.Safari NewTabBehavior -int 1
+defaults write com.apple.Safari NewWindowBehavior -int 1
+
+# Top Sites shows 6 sites
+defaults write com.apple.Safari TopSitesGridArrangement -int 0
+
 ###############################################################################
 # TextEdit                                                                    #
 ###############################################################################
