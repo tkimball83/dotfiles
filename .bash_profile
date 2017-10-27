@@ -9,9 +9,6 @@
 # Source global functions
 [ -f ${HOME}/.bash_functions ] && source ${HOME}/.bash_functions
 
-# Source local settings
-[ -f ${HOME}/.bash_local ] && source ${HOME}/.bash_local
-
 # Source global proxies
 [ -f ${HOME}/.bash_proxies ] && source ${HOME}/.bash_proxies
 
@@ -23,3 +20,6 @@ if [ -f /usr/local/share/liquidprompt ]
 then
   [[ $- = *i* ]] && source /usr/local/share/liquidprompt
 fi
+
+# Source local settings
+[ -f ${HOME}/.bash_local ] && source ${HOME}/.bash_local
