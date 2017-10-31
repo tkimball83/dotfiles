@@ -12,7 +12,10 @@ export HISTFILESIZE=0
 export LESSHISTSIZE=0
 
 # Export ansible vault password file
-[ -f ${HOME}/.ansible_vault ] && export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
+if [ -f "${HOME}/.ansible_vault" ]
+then
+  export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
+fi
 
 # Prepend homebrew manpath, if applicable.
 BREW_MANPATH=/usr/local/share/man
@@ -32,7 +35,12 @@ if [ -d "${BREW_PACKAGES}" ]
 then
   for PACKAGE in ${BREW_PACKAGES}/*
   do
-    [ -d "${PACKAGE}/libexec/bin" ] && export PATH="${PACKAGE}/libexec/bin:${PATH}"
-    [ -d "${PACKAGE}/libexec/gnubin" ] && export PATH="${PACKAGE}/libexec/gnubin:${PATH}"
+    for BINDIR in bin gnubin
+    do
+      if [ -d "${PACKAGE}/libexec/${BINDIR}" ]
+      then
+        export PATH="${PACKAGE}/libexec/${BINDIR}:${PATH}"
+      fi
+    done
   done
 fi
