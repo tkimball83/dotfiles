@@ -11,13 +11,28 @@ export EDITOR=vi
 export HISTFILESIZE=0
 export LESSHISTSIZE=0
 
-# Export ansible vault password path
+# Export ansible vault password file
 [ -f ${HOME}/.ansible_vault ] && export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
 
-# Export manpath including brew man-pages
+# Prepend homebrew manpath, if applicable.
 BREW_MANPATH=/usr/local/share/man
-[ -d ${BREW_MANPATH} ] && export MANPATH="${BREW_MANPATH}:${MANPATH}"
+if [ -d "${BREW_MANPATH}" ]
+then
+  if [ ! -z "${MANPATH}" ]
+  then
+    export MANPATH="${BREW_MANPATH}:${MANPATH}"
+  else
+    export MANPATH="${BREW_MANPATH}"
+  fi
+fi
 
-# Export path including brew coreutils
-COREUTILS_PATH=/usr/local/opt/coreutils/libexec/gnubin
-[ -d ${COREUTILS_PATH} ] && export PATH="${COREUTILS_PATH}:${PATH}"
+# Prepend homebrew binary paths, if applicable.
+BREW_PACKAGES=/usr/local/opt
+if [ -d "${BREW_PACKAGES}" ]
+then
+  for PACKAGE in ${BREW_PACKAGES}/*
+  do
+    [ -d "${PACKAGE}/libexec/bin" ] && export PATH="${PACKAGE}/libexec/bin:${PATH}"
+    [ -d "${PACKAGE}/libexec/gnubin" ] && export PATH="${PACKAGE}/libexec/gnubin:${PATH}"
+  done
+fi
