@@ -171,6 +171,9 @@ defaults write com.apple.Safari NewWindowBehavior -int 1
 # Top Sites shows 6 sites
 defaults write com.apple.Safari TopSitesGridArrangement -int 0
 
+# Enable Backspace Key Navigation
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+
 ###############################################################################
 # TextEdit                                                                    #
 ###############################################################################
