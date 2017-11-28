@@ -30,7 +30,7 @@ function crypt()
   [ ! -x ${openssl} ] && return 1
   while true
   do
-    crypt=$(${openssl} passwd -crypt ${string})
+    crypt=$(${openssl} passwd -crypt ${string} 2>/dev/null)
     if [[ ! ${crypt} =~ [./] ]]
     then
       echo ${crypt} | ${awk} '{ print tolower($0) }'
