@@ -109,6 +109,12 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 # Messages                                                                    #
 ###############################################################################
 
+# Keep messages for only 30 days
+defaults write com.apple.iChat KeepMessageForDays -int 30
+
+# Disable saving of history when conversations are closed
+defaults write com.apple.iChat SaveConversationsOnClose -bool false
+
 # Disable smart quotes as it’s annoying for messages that contain code
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
 
