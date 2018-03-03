@@ -157,7 +157,7 @@ defaults write com.apple.Safari NewTabBehavior -int 1
 defaults write com.apple.Safari NewWindowBehavior -int 1
 
 # Safari opens with a new private window
-defaults write com.apple.Safari OpenPrivateWindowWhenNotRestoringSessionAtLaunch -bool true
+defaults write com.apple.Safari OpenPrivateWindowWhenNotRestoringSessionAtLaunch -bool false
 
 # Enable “Do Not Track”
 defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
