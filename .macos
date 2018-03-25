@@ -134,6 +134,9 @@ defaults write com.apple.Safari AutoFillPasswords -bool false
 # Prevent Safari from opening ‘safe’ files automatically after downloading
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
+# Don't allow websites to ask for permission to send push notifications
+defaults write com.apple.Safari CanPromptForPushNotifications -bool false
+
 # Disable Safari’s thumbnail cache for History and Top Sites
 defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
 
