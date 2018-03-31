@@ -11,11 +11,9 @@ export EDITOR=vi
 export HISTFILESIZE=0
 export LESSHISTSIZE=0
 
-# Export ansible vault password file
-if [ -f "${HOME}/.ansible_vault" ]
-then
-  export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
-fi
+# Ansible environment settings
+export ANSIBLE_STDOUT_CALLBACK=yaml
+export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
 
 # Prepend homebrew manpath, if applicable.
 BREW_MANPATH=/usr/local/share/man
