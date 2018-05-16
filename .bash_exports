@@ -28,16 +28,18 @@ then
 fi
 
 # Prepend homebrew binary paths, if applicable.
-BREW_PACKAGES=/usr/local/opt
-if [ -d "${BREW_PACKAGES}" ]
+BREW_BINDIR=(bin gnubin)
+BREW_PKGDIR=/usr/local/opt
+if [ -d "${BREW_PKGDIR}" ]
 then
-  for PACKAGE in ${BREW_PACKAGES}/*
+  BREW_PACKAGES=(${BREW_PKGDIR}/*)
+  for ((p = ${#BREW_PACKAGES[@]} - 1; p >= 0; p--))
   do
-    for BINDIR in bin gnubin
+    for b in ${BREW_BINDIR[@]}
     do
-      if [ -d "${PACKAGE}/libexec/${BINDIR}" ]
+      if [ -d "${BREW_PACKAGES[$p]}/libexec/${b}" ]
       then
-        export PATH="${PACKAGE}/libexec/${BINDIR}:${PATH}"
+        export PATH="${BREW_PACKAGES[$p]}/libexec/${b}:${PATH}"
       fi
     done
   done
