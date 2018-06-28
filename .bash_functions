@@ -50,7 +50,8 @@ function gp()
     if [[ -d "${repo}/.git" ]]
     then
       echo -e "\n[$(basename "${repo}")]\n"
-      ${git} --git-dir "${repo}/.git" pull
+      ${git} -C "${repo}" checkout master
+      ${git} -C "${repo}" pull
     fi
   done
   echo
