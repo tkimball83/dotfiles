@@ -38,3 +38,21 @@ function crypt()
     fi
   done
 }
+
+function gp()
+{
+  basedir=${HOME}/Git
+  find=/usr/bin/find
+  git=/usr/local/bin/git
+  [[ ! -d "${basedir}" ]] && return 1
+  for repo in $(${find} "${basedir}" -type d -maxdepth 1 | sort)
+  do
+    if [[ -d "${repo}/.git" ]]
+    then
+      echo -e "\n[$(basename ${repo})]\n"
+      ${git} --git-dir ${repo}/.git pull
+    fi
+  done
+  echo
+  return 0
+}
