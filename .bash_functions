@@ -49,7 +49,7 @@ function gp()
   do
     if [[ -d "${repo}/.git" ]]
     then
-      echo -e "\n[$(basename "${repo}")]\n"
+      echo -e "\n[\033[1m$(basename "${repo}")\033[0m]\n"
       ${git} -C "${repo}" checkout master
       ${git} -C "${repo}" pull
     fi
