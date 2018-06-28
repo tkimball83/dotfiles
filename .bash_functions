@@ -39,9 +39,9 @@ function crypt()
 
 function gp()
 {
-  basedir=${HOME}/Git
   find=/usr/bin/find
   git=/usr/local/bin/git
+  [[ ! -z $1 ]] && basedir="$1" || basedir="${HOME}/Git"
   [[ ! -d "${basedir}" ]] && return 1
   [[ ! -x ${find} ]] && return 1
   [[ ! -x ${git} ]] && return 1
