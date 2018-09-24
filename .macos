@@ -55,7 +55,7 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 ###############################################################################
 
 # Dark menu bar and dock
-defaults write $HOME/Library/Preferences/.GlobalPreferences.plist AppleInterfaceTheme -string "Dark"
+# defaults write $HOME/Library/Preferences/.GlobalPreferences.plist AppleInterfaceTheme -string "Dark"
 
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "scale"
