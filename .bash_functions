@@ -7,7 +7,7 @@ function auth()
   [[ ! -d "${HOME}/.ssh" ]] && return 1
   [[ ! -x ${ssh_add} ]] && return 1
   [[ ! -x ${ssh_keygen} ]] && return 1
-  for key in ${HOME}/.ssh/id_rsa.*
+  for key in ${HOME}/.ssh/id_*
   do
     if [[ ! ${key##*/} =~ \.pub$ ]]
     then
