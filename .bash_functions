@@ -57,3 +57,18 @@ function gp()
   echo
   return 0
 }
+
+function gtr()
+{
+  git=/usr/local/bin/git
+  oldtag=$2
+  newtag=$1
+  [[ ! -x ${git} ]] && return 1
+  [[ -z ${oldtag} ]] && return 1
+  [[ -z ${newtag} ]] && return 1
+  ${git} tag ${newtag} ${oldtag}
+  ${git} push --tags
+  ${git} push origin :refs/tags/${oldtag}
+  ${git} tag -d ${oldtag}
+  return 0
+}
