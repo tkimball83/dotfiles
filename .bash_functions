@@ -72,3 +72,13 @@ function gtr()
   ${git} tag -d ${oldtag}
   return 0
 }
+
+function md5s()
+{
+  python=/usr/local/bin/python
+  string=$1
+  [[ ! -x ${python} ]] && return 1
+  [[ -z ${string} ]] && return 1
+  ${python} -c 'from hashlib import md5; import sys; print(md5(sys.argv[1]).hexdigest()[:7])' ${string}
+  return 0
+}
