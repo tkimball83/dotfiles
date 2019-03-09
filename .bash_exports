@@ -18,7 +18,7 @@ export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
 BREW_MANPATH=/usr/local/share/man
 if [ -d "${BREW_MANPATH}" ]
 then
-  if [ ! -z "${MANPATH}" ]
+  if [ -n "${MANPATH}" ]
   then
     export MANPATH="${BREW_MANPATH}:${MANPATH}"
   else
@@ -31,10 +31,10 @@ BREW_BINDIR=(bin gnubin)
 BREW_PKGDIR=/usr/local/opt
 if [ -d "${BREW_PKGDIR}" ]
 then
-  BREW_PACKAGES=(${BREW_PKGDIR}/*)
+  BREW_PACKAGES=("${BREW_PKGDIR}"/*)
   for ((p = ${#BREW_PACKAGES[@]} - 1; p >= 0; p--))
   do
-    for b in ${BREW_BINDIR[@]}
+    for b in "${BREW_BINDIR[@]}"
     do
       if [ -d "${BREW_PACKAGES[$p]}/libexec/${b}" ]
       then

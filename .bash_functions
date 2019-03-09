@@ -1,5 +1,3 @@
-#!/bin/bash
-#
 # .bash_functions
 
 function auth()

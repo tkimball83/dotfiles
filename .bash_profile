@@ -1,25 +1,28 @@
 # .bash_profile
 
-# Source global aliases
-[ -f ${HOME}/.bash_aliases ] && source ${HOME}/.bash_aliases
-
-# Source global exports
-[ -f ${HOME}/.bash_exports ] && source ${HOME}/.bash_exports
-
-# Source global functions
-[ -f ${HOME}/.bash_functions ] && source ${HOME}/.bash_functions
-
-# Source global proxies
-[ -f ${HOME}/.bash_proxies ] && source ${HOME}/.bash_proxies
-
-# Source global scripts
-[ -f ${HOME}/.bash_scripts ] && source ${HOME}/.bash_scripts
+# Source global settings
+for f in aliases exports functions proxies scripts
+do
+  if [ -f "${HOME}/.bash_${f}" ]
+  then
+    # shellcheck source=/dev/null
+    source "${HOME}/.bash_${f}"
+  fi
+done
 
 # Source liquidprompt
 if [ -f /usr/local/share/liquidprompt ]
 then
-  [[ $- = *i* ]] && source /usr/local/share/liquidprompt
+  if [[ $- = *i* ]]
+  then
+    # shellcheck disable=SC1091
+    source /usr/local/share/liquidprompt
+  fi
 fi
 
 # Source local settings
-[ -f ${HOME}/.bash_local ] && source ${HOME}/.bash_local
+if [ -f "${HOME}/.bash_local" ]
+then
+  # shellcheck source=/dev/null
+  source "${HOME}/.bash_local"
+fi
