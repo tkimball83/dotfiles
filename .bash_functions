@@ -68,9 +68,9 @@ function gtr()
   [[ -z "${nt}" ]] && return 1
   [[ ! -x ${git} ]] && return 1
   ${git} tag "${nt}" "${ot}"
-  ${git} push --tags
-  ${git} push origin ":refs/tags/${ot}"
   ${git} tag -d "${ot}"
+  ${git} push origin ":refs/tags/${ot}"
+  ${git} push --tags
   return 0
 }
 
