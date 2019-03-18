@@ -19,6 +19,17 @@ function auth()
   return 0
 }
 
+function cheers()
+{
+  local brew=/usr/local/bin/brew
+  [[ ! -x ${brew} ]] && return 1
+  for c in update upgrade cleanup doctor
+  do
+    ${brew} ${c}
+    [[ $? -ne 0 ]] && return 1
+  done
+}
+
 function crypt()
 {
   local str=$1
