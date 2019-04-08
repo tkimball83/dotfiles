@@ -35,15 +35,17 @@ function crypt()
   local str=$1
   local openssl=/usr/bin/openssl
   local tr=/usr/bin/tr
+  shopt -s nocasematch
   [[ -z "${str}" ]] && return 1
   [[ ! -x ${openssl} ]] && return 1
   [[ ! -x ${tr} ]] && return 1
   while true
   do
     local crypt=$(${openssl} passwd -crypt "${str}" 2>/dev/null)
-    if [[ ! ${crypt} =~ [./] ]]
+    if [[ ! ${crypt} =~ [./] ]] && [[ ${crypt} =~ ^${str:0:1} ]]
     then
       echo "${crypt}" | ${tr} A-Z a-z
+      shopt -u nocasematch
       return 0
     fi
   done
