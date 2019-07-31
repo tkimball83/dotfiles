@@ -7,7 +7,7 @@ filetype plugin on
 set autoread
 set cursorline
 set expandtab
-set mouse+=a
+set mouse=r
 set nobackup
 set noswapfile
 set nowritebackup
