@@ -98,3 +98,14 @@ function mds()
   echo "${md5sum:0:7}"
   return 0
 }
+
+function noproxy()
+{
+  local env=/usr/bin/env
+  [[ ! -x ${env} ]] && return 1
+  local proxies=($(${env} | grep -i _proxy | cut -d= -f1))
+  for p in ${proxies[@]}
+  do
+    unset ${p}
+  done
+}
