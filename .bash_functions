@@ -34,18 +34,19 @@ function crypt()
 {
   local str=$1
   local openssl=/usr/bin/openssl
+  local shell=${SHELL##*/}
   local tr=/usr/bin/tr
   [[ -z "${str}" ]] && return 1
   [[ ! -x ${openssl} ]] && return 1
-  [[ ! -x ${tr} ]] && return 1
-  shopt -s nocasematch
+  [[ "${shell}" =~ 'zsh$' ]] && so=setopt || so=shopt
+  ${so} -s nocasematch
   while true
   do
     local crypt=$(${openssl} passwd -crypt "${str}" 2>/dev/null)
     if [[ ! ${crypt} =~ [./] ]] && [[ ${crypt} =~ ^${str:0:1} ]]
     then
       echo "${crypt}" | ${tr} A-Z a-z
-      shopt -u nocasematch
+      ${so} -u nocasematch
       return 0
     fi
   done
@@ -104,8 +105,8 @@ function noproxy()
   local env=/usr/bin/env
   [[ ! -x ${env} ]] && return 1
   local proxies=($(${env} | grep -i _proxy | cut -d= -f1))
-  for p in ${proxies[@]}
+  for proxy in ${proxies[@]}
   do
-    unset ${p}
+    unset ${proxy}
   done
 }
