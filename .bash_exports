@@ -7,9 +7,12 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 # Set default editor
 export EDITOR=vi
 
-# Disable bash+less history
+# Disable bash, less, and zsh histories
+export HISTFILE=
+export HISTSIZE=0
 export HISTFILESIZE=0
 export LESSHISTSIZE=0
+export SAVEHIST=0
 
 # Ansible environment settings
 export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
