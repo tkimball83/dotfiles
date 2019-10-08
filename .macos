@@ -124,6 +124,13 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
+# Music                                                                       #
+###############################################################################
+
+# Disable Apple Music
+defaults write com.apple.iTunes disableAppleMusic -bool true
+
+###############################################################################
 # Safari & WebKit                                                             #
 ###############################################################################
 
