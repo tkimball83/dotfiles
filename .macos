@@ -16,6 +16,9 @@ defaults write com.apple.dock show-recents -bool false
 # Change default dock tilesize
 defaults write com.apple.dock tilesize -int 45
 
+# Show battery percentage
+defaults write com.apple.menuextra.battery ShowPercent -string YES
+
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
