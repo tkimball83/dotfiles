@@ -30,6 +30,31 @@ function cheers()
   done
 }
 
+function dr()
+{
+  local domain=${1-}
+  local basedir=${2-${HOME}/Documents}
+  local date=/bin/date
+  local defaults=/usr/bin/defaults
+  [[ ! -d "${basedir}" ]] && return 1
+  [[ ! -x "${date}" ]] && return 1
+  [[ ! -x "${defaults}" ]] && return 1
+  local today=$(${date} +"%Y%m%d")
+  local x=1
+  while true
+  do
+    file="${basedir}/defaults-${today}-${x}"
+    if [[ ! -f "${file}" ]]
+    then
+       "${defaults}" read ${domain} > "${file}"
+      break
+    else
+      x=$(( ${x} + 1 ))
+      continue
+    fi
+  done
+}
+
 function crypt()
 {
   local str=$1
