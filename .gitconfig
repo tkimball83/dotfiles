@@ -6,13 +6,20 @@
 	interactive = auto
 	status = auto
 	ui = auto
+
 [core]
 	editor = vi
 	excludesfile = ~/.gitignore
+
 [credential]
 	helper = osxkeychain
+
 [push]
 	default = simple
+
 [user]
 	email = tkimball@linuxhq.org
 	name = Taylor Kimball
+
+[includeIf "gitdir:~/Local/"]
+	path = ~/.gitconfig.local
