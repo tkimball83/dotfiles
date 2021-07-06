@@ -5,6 +5,7 @@ filetype on
 filetype indent on
 filetype plugin on
 set autoread
+set clipboard=
 set cursorline
 set expandtab
 set nobackup
