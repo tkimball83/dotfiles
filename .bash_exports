@@ -17,7 +17,7 @@ export SAVEHIST=0
 export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
 
 # Prepend homebrew path
-export PATH="/opt/homebrew/bin:${PATH}"
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}"
 
 # Prepend homebrew manpath
 BREW_MANPATH=/opt/homebrew/share/man
@@ -30,23 +30,4 @@ then
   else
     export MANPATH="${BREW_MANPATH}"
   fi
-fi
-
-# Prepend homebrew binary paths
-BREW_BINDIR=(bin gnubin)
-BREW_PKGDIR=/opt/homebrew/opt
-
-if [ -d "${BREW_PKGDIR}" ]
-then
-  BREW_PACKAGES=("${BREW_PKGDIR}"/*)
-  for ((p = ${#BREW_PACKAGES[@]} - 1; p >= 0; p--))
-  do
-    for b in "${BREW_BINDIR[@]}"
-    do
-      if [ -d "${BREW_PACKAGES[$p]}/libexec/${b}" ]
-      then
-        export PATH="${BREW_PACKAGES[$p]}/libexec/${b}:${PATH}"
-      fi
-    done
-  done
 fi
