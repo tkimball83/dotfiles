@@ -1,0 +1,52 @@
+# .bash_exports
+
+# Use colors
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# Set default editor
+export EDITOR=vi
+
+# Disable bash, less, and zsh histories
+export HISTFILE=/dev/null
+export HISTFILESIZE=0
+export LESSHISTSIZE=0
+export SAVEHIST=0
+
+# Ansible environment settings
+export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
+
+# Prepend homebrew path
+export PATH="/opt/homebrew/bin:${PATH}"
+
+# Prepend homebrew manpath
+BREW_MANPATH=/opt/homebrew/share/man
+
+if [ -d "${BREW_MANPATH}" ]
+then
+  if [ -n "${MANPATH}" ]
+  then
+    export MANPATH="${BREW_MANPATH}:${MANPATH}"
+  else
+    export MANPATH="${BREW_MANPATH}"
+  fi
+fi
+
+# Prepend homebrew binary paths
+BREW_BINDIR=(bin gnubin)
+BREW_PKGDIR=/opt/homebrew/opt
+
+if [ -d "${BREW_PKGDIR}" ]
+then
+  BREW_PACKAGES=("${BREW_PKGDIR}"/*)
+  for ((p = ${#BREW_PACKAGES[@]} - 1; p >= 0; p--))
+  do
+    for b in "${BREW_BINDIR[@]}"
+    do
+      if [ -d "${BREW_PACKAGES[$p]}/libexec/${b}" ]
+      then
+        export PATH="${BREW_PACKAGES[$p]}/libexec/${b}:${PATH}"
+      fi
+    done
+  done
+fi
