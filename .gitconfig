@@ -27,7 +27,7 @@
 	default = simple
 
 [user]
-	email = tkimball@linuxhq.org
+	email = noreply@linuxhq.org
 	name = Taylor Kimball
 
 [includeIf "gitdir:~/Local/"]
