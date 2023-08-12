@@ -62,7 +62,7 @@ function sshpipe ()
 {
   local file=${1}
   local host=${2}
-  local ssh=/opt/homebrew/bin/ssh
+  local ssh=/usr/bin/ssh
   [[ -z "${file}" ]] && return 1
   [[ -z "${host}" ]] && return 1
   [[ ! -f "${file}" ]] && return 1
