@@ -3,6 +3,7 @@
 function crypt ()
 {
   local str=$1
+  local prefix=${2-${str:0:1}}
   local openssl=/usr/bin/openssl
   local shell=${SHELL##*/}
   local tr=/usr/bin/tr
@@ -13,7 +14,7 @@ function crypt ()
   while true
   do
     local crypt=$(${openssl} passwd -crypt "${str}" 2>/dev/null)
-    if [[ ! ${crypt} =~ [./] ]] && [[ ${crypt} =~ ^${str:0:1} ]]
+    if [[ ! ${crypt} =~ [./] ]] && [[ ${crypt} =~ ^${prefix} ]]
     then
       echo "${crypt}" | ${tr} A-Z a-z
       ${so} -u nocasematch
@@ -30,7 +31,7 @@ function heic2jpg ()
   [[ ! -x ${mogrify} ]] && return 1
   for h in $(${find} . -maxdepth 1 -iname '*.heic')
   do
-    ${mogrify} -format jpg ${h}
+    ${mogrify} -format jpg "${h}"
   done
   return 0
 }
@@ -56,17 +57,4 @@ function noproxy ()
   do
     unset ${proxy}
   done
-}
-
-function sshpipe ()
-{
-  local file=${1}
-  local host=${2}
-  local ssh=/usr/bin/ssh
-  [[ -z "${file}" ]] && return 1
-  [[ -z "${host}" ]] && return 1
-  [[ ! -f "${file}" ]] && return 1
-  [[ ! -x "${ssh}" ]] && return 1
-  cat "${file}" | ${ssh} ${host} "cat > '${file}'"
-  return 0
 }
