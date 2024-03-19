@@ -81,9 +81,11 @@ function op_key_pub ()
 {
   local item="${1-}"
   local dir="${HOME}/.ssh"
+  local jq=/opt/homebrew/bin/jq
   local op=/opt/homebrew/bin/op
 
   [[ -z "${item}" ]] && return 1
+  [[ ! -x "${jq}" ]] && return 1
   [[ ! -x "${op}" ]] && return 1
 
   /bin/mkdir -p "${dir}"
@@ -94,7 +96,7 @@ function op_key_pub ()
   "${op}" item get "${item}" \
     --fields public_key \
     --format json \
-  | jq -r '.value' > "${dir}/key.${item%%-*}.pub"
+  | "${jq}" -r '.value' > "${dir}/key.${item%%-*}.pub"
 
   return 0
 }
