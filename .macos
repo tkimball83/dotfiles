@@ -172,6 +172,7 @@ networksetup -setv6off Wi-Fi
 open -a Safari
 sleep 5
 osascript -e "tell application \"Safari\" to quit"
+sleep 5
 
 # Disable AutoFill
 defaults write com.apple.Safari AutoFillCreditCardData -bool false
