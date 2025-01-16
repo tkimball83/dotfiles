@@ -14,6 +14,7 @@ export LESSHISTSIZE=0
 export SAVEHIST=0
 
 # Ansible environment settings
+export ANSIBLE_STDOUT_CALLBACK=yaml
 export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
 
 # Homebrew environment settings
