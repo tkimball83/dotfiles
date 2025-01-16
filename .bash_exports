@@ -31,6 +31,7 @@ then
 fi
 
 export HOMEBREW_MANPATH HOMEBREW_NO_AUTO_UPDATE
+
 if [ -f "/opt/homebrew/bin/brew" ]
 then
   eval "$(/opt/homebrew/bin/brew shellenv)"
