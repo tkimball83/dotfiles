@@ -44,22 +44,6 @@ function heic2jpg ()
   return 0
 }
 
-function md5salt ()
-{
-  local str="${1-}"
-  local salt="${2-$USER}"
-  local md5=/sbin/md5
-
-  [[ -z "${str}" ]] && return 1
-  [[ ! -x "${md5}" ]] && return 1
-
-  local md5sum
-  md5sum=$(echo -n "${str}${salt}" | "${md5}")
-  echo "${md5sum:0:7}"
-
-  return 0
-}
-
 function noproxy ()
 {
   local proxies=()
