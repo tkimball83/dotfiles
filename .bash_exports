@@ -43,7 +43,7 @@ export PYENV_ROOT="${HOME}/.pyenv"
 
 if [ -f "/opt/homebrew/bin/pyenv" ]
 then
-  eval "$(/opt/homebrew/bin/pyenv init - ${SHELL##*/})"
+  eval "$(/opt/homebrew/bin/pyenv init - "${SHELL##*/}")"
 fi
 
 # Local shell path settings
