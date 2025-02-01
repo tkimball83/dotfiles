@@ -14,24 +14,12 @@ export LESSHISTSIZE=0
 export SAVEHIST=0
 
 # Ansible environment settings
-export ANSIBLE_STDOUT_CALLBACK=yaml
+export ANSIBLE_CALLBACK_RESULT_FORMAT=yaml
 export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.ansible_vault"
 
 # Homebrew environment settings
-HOMEBREW_MANPATH=/opt/homebrew/share/man
-HOMEBREW_NO_AUTO_UPDATE=1
-
-if [ -d "${HOMEBREW_MANPATH}" ]
-then
-  if [ -n "${MANPATH}" ]
-  then
-    export MANPATH="${HOMEBREW_MANPATH}:${MANPATH}"
-  else
-    export MANPATH="${HOMEBREW_MANPATH}"
-  fi
-fi
-
-export HOMEBREW_MANPATH HOMEBREW_NO_AUTO_UPDATE
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_VERBOSE=1
 
 if [ -f "/opt/homebrew/bin/brew" ]
 then
