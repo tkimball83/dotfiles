@@ -1,7 +1,6 @@
 # .bash_functions
 
-function crypt ()
-{
+function crypt() {
   local str="${1-}"
   local prefix="${2-${str:0:1}}"
   local shell="${SHELL##*/}"
@@ -11,12 +10,10 @@ function crypt ()
 
   "${so}" -s nocasematch
 
-  while true
-  do
+  while true; do
     # shellcheck disable=SC2059
     passwd=$(/usr/bin/openssl passwd -crypt "${str}" 2>/dev/null)
-    if [[ ! "${passwd}" =~ [./] ]] && [[ "${passwd}" =~ ^"${prefix}" ]]
-    then
+    if [[ ! "${passwd}" =~ [./] ]] && [[ "${passwd}" =~ ^"${prefix}" ]]; then
       echo "${passwd}" | /usr/bin/tr '[:upper:]' '[:lower:]'
       "${so}" -u nocasematch
       return 0
@@ -24,45 +21,38 @@ function crypt ()
   done
 }
 
-function heic2jpg ()
-{
+function heic2jpg() {
   local mogrify=/opt/homebrew/bin/mogrify
 
   [[ ! -x "${mogrify}" ]] && return 1
 
   local images=()
-  while IFS='' read -r line
-  do
+  while IFS='' read -r line; do
     images+=("${line}")
   done < <(/usr/bin/find . -maxdepth 1 -iname '*.heic')
 
-  for heic in "${images[@]}"
-  do
+  for heic in "${images[@]}"; do
     "${mogrify}" -format jpg "${heic}"
   done
 
   return 0
 }
 
-function noproxy ()
-{
+function noproxy() {
   local proxies=()
 
-  while IFS='' read -r line
-  do
+  while IFS='' read -r line; do
     proxies+=("${line}")
   done < <(/usr/bin/env | grep -i _proxy | cut -d= -f1)
 
-  for proxy in "${proxies[@]}"
-  do
+  for proxy in "${proxies[@]}"; do
     unset "${proxy}"
   done
 
   return 0
 }
 
-function op_key_pub ()
-{
+function op_key_pub() {
   local item="${1-}"
   local dir="${HOME}/.ssh"
   local jq=/opt/homebrew/bin/jq
@@ -79,8 +69,22 @@ function op_key_pub ()
 
   "${op}" item get "${item}" \
     --fields public_key \
-    --format json \
-  | "${jq}" -r '.value' > "${dir}/key.${item%%-*}.pub"
+    --format json |
+    "${jq}" -r '.value' >"${dir}/key.${item%%-*}.pub"
+
+  return 0
+}
+
+function rclone_mount() {
+  local remote="${1}"
+  local dir="${2-$HOME/Volumes}"
+
+  [[ -z "${remote}" ]] && return 1
+  ! command -v rclone >/dev/null && return 1
+
+  mkdir -p "${dir}/${remote}"
+  rclone mount --read-only "${remote}:" "${dir}/${remote}"
+  rmdir "${dir}/${remote}"
 
   return 0
 }
