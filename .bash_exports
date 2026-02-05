@@ -36,5 +36,13 @@ fi
 export RCLONE_PROGRESS=true
 export RCLONE_VERBOSE=1
 
+# Starship environment settings
+export STARSHIP_CONFIG="${HOME}/.starship.toml"
+
+if [ -e "/opt/homebrew/bin/starship" ]
+then
+  eval "$(/opt/homebrew/bin/starship init "${SHELL##*/}")"
+fi
+
 # Local shell path settings
 export PATH="${PYENV_ROOT}/bin:${HOME}/.local/bin:${PATH}"
