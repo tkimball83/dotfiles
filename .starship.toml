@@ -3,3 +3,12 @@
 [directory]
 truncate_to_repo = false
 truncation_length = 12
+
+[git_metrics]
+disabled = false
+
+[os]
+disabled = false
+
+[username]
+show_always = true
