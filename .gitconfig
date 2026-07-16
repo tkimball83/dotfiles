@@ -27,7 +27,7 @@ rebase = false
 default = simple
 
 [user]
-email = noreply@linuxhq.org
+email = tkimball83@users.noreply.github.com
 name = Taylor Kimball
 
 [includeIf "gitdir:~/Local/"]
