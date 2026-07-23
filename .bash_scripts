@@ -2,8 +2,12 @@
 
 # Generate ssh config (7.3p1+)
 if [ -d "${HOME}/.ssh" ]; then
-  [ -f "${HOME}/.ssh/config" ] && rm -f "${HOME}/.ssh/config"
-  for config in "${HOME}"/.ssh/config.*; do
-    echo "Include ${config##*/}" >>"${HOME}/.ssh/config"
+  shellopt on nullglob
+  configs=("${HOME}"/.ssh/config.*)
+  shellopt off nullglob
+
+  rm -f "${HOME}/.ssh/config"
+  for config in "${configs[@]}"; do
+    echo "Include ${config##*/}" >> "${HOME}/.ssh/config"
   done
 fi

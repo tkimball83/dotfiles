@@ -1,4 +1,4 @@
-# .starship.tmol
+# .starship.toml
 
 command_timeout = 1000
 

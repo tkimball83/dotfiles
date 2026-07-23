@@ -3,19 +3,18 @@
 function crypt() {
   local str="${1-}"
   local prefix="${2-${str:0:1}}"
-  local shell="${SHELL##*/}"
+  local passwd
 
   [[ -z "${str}" ]] && return 1
-  [[ "${shell}" =~ 'zsh$' ]] && so=setopt || so=shopt
 
-  "${so}" -s nocasematch
+  shellopt on nocasematch
 
   while true; do
     # shellcheck disable=SC2059
-    passwd=$(/usr/bin/openssl passwd -crypt "${str}" 2>/dev/null)
+    passwd=$(/usr/bin/openssl passwd -crypt "${str}" 2> /dev/null)
     if [[ ! "${passwd}" =~ [./] ]] && [[ "${passwd}" =~ ^"${prefix}" ]]; then
       echo "${passwd}" | /usr/bin/tr '[:upper:]' '[:lower:]'
-      "${so}" -u nocasematch
+      shellopt off nocasematch
       return 0
     fi
   done
@@ -65,26 +64,47 @@ function op_key_pub() {
   /bin/mkdir -p "${dir}"
   /bin/chmod 700 "${dir}"
 
-  ! "${op}" item get "${item}" >/dev/null && return 1
+  ! "${op}" item get "${item}" > /dev/null && return 1
 
   "${op}" item get "${item}" \
     --fields public_key \
     --format json |
-    "${jq}" -r '.value' >"${dir}/key.${item%%-*}.pub"
+    "${jq}" -r '.value' > "${dir}/key.${item%%-*}.pub"
 
   return 0
 }
 
 function rclone_mount() {
   local remote="${1}"
-  local dir="${2-$HOME/Volumes}"
+  local dir="${2-${HOME}/Volumes}"
 
   [[ -z "${remote}" ]] && return 1
-  ! command -v rclone >/dev/null && return 1
+  ! command -v rclone > /dev/null && return 1
 
   mkdir -p "${dir}/${remote}"
   rclone nfsmount --read-only "${remote}:" "${dir}/${remote}"
   rmdir "${dir}/${remote}"
 
   return 0
+}
+
+function shellopt() {
+  local action="${1-}"
+  local opt="${2-}"
+
+  [[ -z "${action}" || -z "${opt}" ]] && return 1
+
+  if [[ "${SHELL##*/}" == zsh ]]; then
+    case "${action}" in
+      on) setopt "${opt}" ;;
+      off) unsetopt "${opt}" ;;
+      *) return 1 ;;
+    esac
+  else
+    case "${action}" in
+      on) shopt -s "${opt}" ;;
+      off) shopt -u "${opt}" ;;
+      *) return 1 ;;
+    esac
+  fi
 }

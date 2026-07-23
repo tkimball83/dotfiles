@@ -1,10 +1,6 @@
 # .gitconfig
 
 [color]
-branch = auto
-diff = auto
-interactive = auto
-status = auto
 ui = auto
 
 [core]
@@ -13,6 +9,9 @@ excludesfile = ~/.gitignore
 
 [credential]
 helper = osxkeychain
+
+[fetch]
+prune = true
 
 [filter "lfs"]
 clean = git-lfs clean -- %f
