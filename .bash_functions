@@ -83,7 +83,7 @@ function rclone_mount() {
   ! command -v rclone >/dev/null && return 1
 
   mkdir -p "${dir}/${remote}"
-  rclone mount --read-only "${remote}:" "${dir}/${remote}"
+  rclone nfsmount --read-only "${remote}:" "${dir}/${remote}"
   rmdir "${dir}/${remote}"
 
   return 0
