@@ -1,10 +1,5 @@
 # .pre-commit-config.yaml
-#
-# Install once with: pre-commit install
-# Run against all files: pre-commit run --all-files
 
-# Shell dotfiles here have no extension or shebang, so they are not
-# auto-detected as shell. Match them explicitly and force types: [file].
 default_language_version:
   python: python3
 
@@ -22,7 +17,6 @@ repos:
     rev: v3.13.1-1
     hooks:
       - id: shfmt
-        # shfmt reads indentation from .editorconfig automatically.
         args: [--write]
         types: [file]
         files: &shell_files '^\.(bash_(aliases|exports|functions|profile|scripts)|macos)$'
