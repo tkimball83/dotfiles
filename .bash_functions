@@ -37,6 +37,14 @@ function heic2jpg() {
   return 0
 }
 
+function ls() {
+  if command -v gls > /dev/null 2>&1; then
+    command gls -AF --color=auto --group-directories-first "$@"
+  else
+    command ls -AFG "$@"
+  fi
+}
+
 function noproxy() {
   local proxies=()
 
