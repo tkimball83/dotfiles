@@ -1,60 +1,47 @@
 # .bash_functions
 
-function crypt() {
+function crypt() (
   local str="${1-}"
   local prefix="${2-${str:0:1}}"
   local passwd
 
-  [[ -z "${str}" ]] && return 1
+  [[ "${str}" =~ ^[a-zA-Z]+$ ]] || return 1
+  [[ "${prefix}" =~ ^[a-zA-Z]$ ]] || return 1
 
   shellopt on nocasematch
 
   while true; do
-    # shellcheck disable=SC2059
-    passwd=$(/usr/bin/openssl passwd -crypt "${str}" 2> /dev/null)
+    # Pinned to the system LibreSSL: Homebrew's OpenSSL has dropped -crypt.
+    passwd=$(/usr/bin/openssl passwd -crypt "${str}" 2> /dev/null) || return 1
     if [[ ! "${passwd}" =~ [./] ]] && [[ "${passwd}" =~ ^"${prefix}" ]]; then
-      echo "${passwd}" | /usr/bin/tr '[:upper:]' '[:lower:]'
-      shellopt off nocasematch
+      echo "${passwd}" | tr '[:upper:]' '[:lower:]'
       return 0
     fi
   done
-}
+)
 
 function heic2jpg() {
-  local mogrify=/opt/homebrew/bin/mogrify
+  ! command -v mogrify > /dev/null && return 1
 
-  [[ ! -x "${mogrify}" ]] && return 1
-
-  local images=()
-  while IFS='' read -r line; do
-    images+=("${line}")
-  done < <(/usr/bin/find . -maxdepth 1 -iname '*.heic')
-
-  for heic in "${images[@]}"; do
-    "${mogrify}" -format jpg "${heic}"
-  done
-
-  return 0
+  find . -maxdepth 1 -type f -iname '*.heic' -exec mogrify -format jpg {} +
 }
 
 function ls() {
   if command -v gls > /dev/null 2>&1; then
     command gls -AF --color=auto --group-directories-first "$@"
+  elif [[ "${OSTYPE}" == linux* ]]; then
+    command ls -AF --color=auto --group-directories-first "$@"
   else
     command ls -AFG "$@"
   fi
 }
 
 function noproxy() {
-  local proxies=()
+  local proxy
 
-  while IFS='' read -r line; do
-    proxies+=("${line}")
-  done < <(/usr/bin/env | grep -i _proxy | cut -d= -f1)
-
-  for proxy in "${proxies[@]}"; do
+  while IFS='' read -r proxy; do
     unset "${proxy}"
-  done
+  done < <(env | grep -iE '^[a-z_]*_proxy=' | cut -d= -f1)
 
   return 0
 }
@@ -62,38 +49,37 @@ function noproxy() {
 function op_key_pub() {
   local item="${1-}"
   local dir="${HOME}/.ssh"
-  local jq=/opt/homebrew/bin/jq
-  local op=/opt/homebrew/bin/op
 
   [[ -z "${item}" ]] && return 1
-  [[ ! -x "${jq}" ]] && return 1
-  [[ ! -x "${op}" ]] && return 1
+  ! command -v jq > /dev/null && return 1
+  ! command -v op > /dev/null && return 1
 
-  /bin/mkdir -p "${dir}"
-  /bin/chmod 700 "${dir}"
+  mkdir -p "${dir}"
+  chmod 700 "${dir}"
 
-  ! "${op}" item get "${item}" > /dev/null && return 1
+  ! op item get "${item}" > /dev/null && return 1
 
-  "${op}" item get "${item}" \
+  op item get "${item}" \
     --fields public_key \
     --format json |
-    "${jq}" -r '.value' > "${dir}/key.${item%%-*}.pub"
-
-  return 0
+    jq -r '.value' > "${dir}/key.${item}.pub"
 }
 
-function rclone_mount() {
-  local remote="${1}"
-  local dir="${2-${HOME}/Volumes}"
+function rcmount() {
+  local remote="${1-}"
+  local dir="${2:-${HOME}/Volumes}"
+  local rc=0
 
-  [[ -z "${remote}" ]] && return 1
+  remote="${remote//:/}"
+
+  [[ -z "${remote}" || "${remote}" == */* ]] && return 1
   ! command -v rclone > /dev/null && return 1
 
-  mkdir -p "${dir}/${remote}"
-  rclone nfsmount --read-only "${remote}:" "${dir}/${remote}"
+  mkdir -p "${dir}/${remote}" || return 1
+  rclone nfsmount --vfs-cache-mode full "${remote}:" "${dir}/${remote}" || rc=$?
   rmdir "${dir}/${remote}"
 
-  return 0
+  return "${rc}"
 }
 
 function shellopt() {
@@ -102,7 +88,7 @@ function shellopt() {
 
   [[ -z "${action}" || -z "${opt}" ]] && return 1
 
-  if [[ "${SHELL##*/}" == zsh ]]; then
+  if [[ -n "${ZSH_VERSION-}" ]]; then
     case "${action}" in
       on) setopt "${opt}" ;;
       off) unsetopt "${opt}" ;;

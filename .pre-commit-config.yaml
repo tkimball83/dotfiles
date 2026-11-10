@@ -19,7 +19,7 @@ repos:
       - id: shfmt
         args: [--write]
         types: [file]
-        files: &shell_files '^\.(bash_(aliases|exports|functions|profile|scripts)|macos)$'
+        files: &shell_files '^\.(bash.*|macos|zshrc)$'
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.11.0.1
