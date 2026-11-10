@@ -28,8 +28,8 @@ fi
 # Python environment settings
 export PYENV_ROOT="${HOME}/.pyenv"
 
-if [ -f "/opt/homebrew/bin/pyenv" ]; then
-  eval "$(/opt/homebrew/bin/pyenv init - "${SHELL##*/}")"
+if command -v pyenv > /dev/null; then
+  eval "$(pyenv init - "${ZSH_VERSION:+zsh}${BASH_VERSION:+bash}")"
 fi
 
 # Rclone environment settings
@@ -39,8 +39,8 @@ export RCLONE_VERBOSE=1
 # Starship environment settings
 export STARSHIP_CONFIG="${HOME}/.starship.toml"
 
-if [ -f "/opt/homebrew/bin/starship" ]; then
-  eval "$(/opt/homebrew/bin/starship init "${SHELL##*/}")"
+if command -v starship > /dev/null; then
+  eval "$(starship init "${ZSH_VERSION:+zsh}${BASH_VERSION:+bash}")"
 fi
 
 # Local shell path settings

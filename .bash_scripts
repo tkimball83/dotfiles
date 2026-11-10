@@ -10,4 +10,5 @@ if [ -d "${HOME}/.ssh" ]; then
   for config in "${configs[@]}"; do
     echo "Include ${config##*/}" >> "${HOME}/.ssh/config"
   done
+  unset configs config
 fi

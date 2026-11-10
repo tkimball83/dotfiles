@@ -7,6 +7,7 @@ for f in aliases exports functions proxies scripts; do
     source "${HOME}/.bash_${f}"
   fi
 done
+unset f
 
 # Source local settings
 if [ -f "${HOME}/.bash_local" ]; then
